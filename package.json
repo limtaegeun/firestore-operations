@@ -1,0 +1,16 @@
+{
+  "name": "firestore-operations",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "author": "limtaegeun",
+  "license": "ISC",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/index.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.11.0",
+    "dotenv": "^16.3.1"
+  }
+}
