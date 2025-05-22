@@ -1,5 +1,5 @@
 import initializeFirebase from './config/firebase.js';
-import { processInChunks } from './utils/batchOperations.js';
+import {processInChunks} from './utils/batchOperations.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -9,8 +9,7 @@ const updateFunction = (data) => {
     // 여기에 각 문서를 어떻게 업데이트할지 정의
     return {
         ...data,
-        richTextDescription: JSON.stringify([{insert: data.description}]),
-        createdAt: new Date(),
+        recommendWeight: 0
         // 필요한 필드 수정
     };
 };
@@ -18,7 +17,7 @@ const updateFunction = (data) => {
 const main = async () => {
     try {
         const db = initializeFirebase();
-        const collectionRef = db.collection('events');
+        const collectionRef = db.collection('userStats');
 
         console.log('Starting batch operations...');
         const totalProcessed = await processInChunks(db, collectionRef, updateFunction);

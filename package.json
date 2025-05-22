@@ -7,7 +7,9 @@
   "license": "ISC",
   "scripts": {
     "start": "node src/index.js",
-    "start:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/index.js"
+    "start:relation": "node src/relation-batch-update.js",
+    "start:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/index.js",
+    "start:relation:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/relation-batch-update.js"
   },
   "dependencies": {
     "firebase-admin": "^11.11.0",
