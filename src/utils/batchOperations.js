@@ -4,7 +4,7 @@ const processBatch = async (db, docs, updateFunction) => {
 
     try {
         docs.forEach((doc) => {
-            const updatedData = updateFunction(doc.data());
+            const updatedData = updateFunction(doc.data(), doc.id);
             batch.update(doc.ref, updatedData);
             count++;
         });
