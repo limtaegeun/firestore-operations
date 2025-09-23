@@ -8,11 +8,14 @@
   "scripts": {
     "start": "node src/index.js",
     "start:relation": "node src/relation-batch-update.js",
+    "start:foreach": "node src/for_each.js",
     "start:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/index.js",
-    "start:relation:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/relation-batch-update.js"
+    "start:relation:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/relation-batch-update.js",
+    "start:foreach:emul": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node src/for_each.js"
   },
   "dependencies": {
-    "firebase-admin": "^11.11.0",
-    "dotenv": "^16.3.1"
+    "@elastic/elasticsearch": "^8.19.1",
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^11.11.0"
   }
 }

@@ -46,6 +46,37 @@ const processInChunks = async (db, collectionRef, updateFunction, chunkSize = 50
     }
 };
 
+const forEachInChunks = async (db, collectionRef, updateFunction, chunkSize = 500) => {
+    let lastDoc = null;
+    let totalProcessed = 0;
+
+    try {
+        while (true) {
+            let query = collectionRef.limit(chunkSize);
+            if (lastDoc) {
+                query = query.startAfter(lastDoc);
+            }
+
+            const snapshot = await query.get();
+            if (snapshot.empty) break;
+
+            for (const doc of snapshot.docs) {
+                await updateFunction(doc.data(), doc.id);
+                totalProcessed++;
+            }
+
+            lastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+            console.log(`Total processed so far: ${totalProcessed}`);
+        }
+
+        return totalProcessed;
+    } catch (error) {
+        console.error('Error in batch processing:', error);
+        throw error;
+    }
+};
+
 // 청크 단위로 참조 데이터를 가져오는 최적화된 방법
 const processBatchWithChunkedReference = async (db, docs, referenceCollectionName) => {
     const batch = db.batch();
@@ -137,4 +168,4 @@ const processInChunksWithChunkedReference = async (db, collectionRef, referenceC
 };
 
 
-export { processBatch, processInChunks, processInChunksWithChunkedReference };
+export { processBatch, processInChunks, forEachInChunks, processInChunksWithChunkedReference };

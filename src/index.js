@@ -10,7 +10,8 @@ const updateFunction = (data, id) => {
     // 여기에 각 문서를 어떻게 업데이트할지 정의
     return {
         ...data,
-        profileId: id
+        createdAt: Timestamp.fromMillis(Date.now() - 24 * 60 * 60 * 1000),
+        searchAt: Timestamp.now()
     };
 };
 
@@ -18,7 +19,7 @@ const main = async () => {
     try {
         const db = initializeFirebase();
         // const collectionRef = db.collection('profiles');
-        const collectionRef = db.collectionGroup('following');
+        const collectionRef = db.collectionGroup('matching');
 
         console.log('Starting batch operations...');
         const totalProcessed = await processInChunks(db, collectionRef, updateFunction);
