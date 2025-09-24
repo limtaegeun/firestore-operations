@@ -14,17 +14,23 @@ const client = new Client({
 });
 const index = 'events_dev';
 const updateFunction = async (data, id) => {
-    console.log(id)
     // 여기에 각 문서를 어떻게 업데이트할지 정의
-    if (!data.indexId) return
-    return client.update({
-        index,
-        id: data.indexId,
-        doc: {
+    if (data.indexId) {
+        console.log(id,  {
             like_count: data.likedCount || 0,
-            left_seats : data.countLimit ? data.countLimit - data.members.length : 99,
-        },
-    });
+            left_seats: data.countLimit ? data.countLimit - data.members.length : 99,
+            default_score: 1
+        },)
+        return client.update({
+            index,
+            id: data.indexId,
+            doc: {
+                like_count: data.likedCount || 0,
+                left_seats: data.countLimit ? data.countLimit - data.members.length : 99,
+                default_score: 1
+            },
+        });
+    }
 };
 
 const main = async () => {

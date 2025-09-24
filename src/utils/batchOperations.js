@@ -61,7 +61,12 @@ const forEachInChunks = async (db, collectionRef, updateFunction, chunkSize = 50
             if (snapshot.empty) break;
 
             for (const doc of snapshot.docs) {
-                await updateFunction(doc.data(), doc.id);
+                try {
+                    await updateFunction(doc.data(), doc.id);
+                } catch (error) {
+                    console.error(`Error processing document ${doc.id}:`, error);
+                    continue; // 오류가 발생해도 계속 진행
+                }
                 totalProcessed++;
             }
 
